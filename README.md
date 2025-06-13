@@ -1,2 +1,51 @@
-# smil2dock
-Smi2dock is a one stop molecular converter for docking programs
+# smil2dock: SMILES-to-3D Molecular Format Converter
+A Python tool for converting SMILES strings—single molecules or large libraries—into multiple 3D molecular formats (PDB, PDBQT, MOL2, SDF) for molecular docking and computational chemistry. The tool also calculates key physicochemical and pharmacokinetic properties using RDKit and Open Babel.
+Features
+	•	Input: Single SMILES string or a file (one SMILES per line)
+	•	3D Structure Generation: Generates 3D coordinates and optimizes geometry
+	•	Format Conversion: Exports to PDB, PDBQT, MOL2, and SDF formats
+	•	Property Calculation: Calculates molecular weight, LogP, H-bond donors/acceptors, TPSA, rotatable bonds, and more
+	•	Batch Processing: Handles large compound libraries efficiently
+	•	Extensible: Easily add more descriptors or output formats
+## Requirements
+	-	Python 3.7+
+	-	RDKit
+	-	Open Babel (with Python bindings: openbabel and pybel)
+ ## install dependencies
+ 
+ ```
+conda install -c conda-forge rdkit openbabel
+or 
+pip install openbabel pybel
+```
+## Usage
+### single molecule
+
+```
+python converter.py "CCO" -o ethanol
+
+```
+
+### Batch Processing
+- Given a file `molecules.smi` with one SMILES per line:
+```
+python converter.py molecules.smi -o output_directory
+
+```
+
+## Optional Arguments
+### input
+
+```
+		`-n`, `--num_confs`: Number of 3D conformers to generate (default: 10)
+		`-o`, `--output`: Output directory or base name
+```
+
+### Output
+For each molecule, the following files are generated:
+```
+		`.pdb` : Protein Data Bank format
+		`.pdbqt` : AutoDock Vina format
+		`.mol2` : SYBYL MOL2 format
+		`.sdf` : Structure Data File
+```

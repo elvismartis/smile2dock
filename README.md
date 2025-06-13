@@ -1,12 +1,12 @@
 # smil2dock: SMILES-to-3D Molecular Format Converter
 A Python tool for converting SMILES strings—single molecules or large libraries—into multiple 3D molecular formats (PDB, PDBQT, MOL2, SDF) for molecular docking and computational chemistry. The tool also calculates key physicochemical and pharmacokinetic properties using RDKit and Open Babel.
 Features
-	•	Input: Single SMILES string or a file (one SMILES per line)
-	•	3D Structure Generation: Generates 3D coordinates and optimizes geometry
-	•	Format Conversion: Exports to PDB, PDBQT, MOL2, and SDF formats
-	•	Property Calculation: Calculates molecular weight, LogP, H-bond donors/acceptors, TPSA, rotatable bonds, and more
-	•	Batch Processing: Handles large compound libraries efficiently
-	•	Extensible: Easily add more descriptors or output formats
+	-	Input: Single SMILES string or a file (one SMILES per line)
+	-	3D Structure Generation: Generates 3D coordinates and optimizes geometry
+	-	Format Conversion: Exports to PDB, PDBQT, MOL2, and SDF formats
+	-	Property Calculation: Calculates molecular weight, LogP, H-bond donors/acceptors, TPSA, rotatable bonds, and more
+	-	Batch Processing: Handles large compound libraries efficiently
+	-	Extensible: Easily add more descriptors or output formats
 ## Requirements
 	-	Python 3.7+
 	-	RDKit
@@ -19,33 +19,41 @@ or
 pip install openbabel pybel
 ```
 ## Usage
-### single molecule
+### single molecule conversion
 
 ```
 python converter.py "CCO" -o ethanol
 
 ```
+### single molecule conversion with Tanimoto similarity
+```
+python converter.py "CCO" -o ethanol --reference "CCN"
+```
 
-### Batch Processing
+### Batch Processing for molecular conversion
 - Given a file `molecules.smi` with one SMILES per line:
 ```
 python converter.py molecules.smi -o output_directory
 
+```
+### Batch Processing for molecular conversion with Tanimoto similarity
+```
+python converter.py molecules.smi -o output_dir --reference "CCN"
 ```
 
 ## Optional Arguments
 ### input
 
 ```
-		`-n`, `--num_confs`: Number of 3D conformers to generate (default: 10)
-		`-o`, `--output`: Output directory or base name
+`-n`, `--num_confs`: Number of 3D conformers to generate (default: 10)
+`-o`, `--output`: Output directory or base name
 ```
 
 ### Output
 For each molecule, the following files are generated:
 ```
-		`.pdb` : Protein Data Bank format
-		`.pdbqt` : AutoDock Vina format
-		`.mol2` : SYBYL MOL2 format
-		`.sdf` : Structure Data File
+`.pdb` : Protein Data Bank format
+`.pdbqt` : AutoDock Vina format
+`.mol2` : SYBYL MOL2 format
+`.sdf` : Structure Data File
 ```

@@ -23,9 +23,7 @@ git clone git@github.com:elvismartis/smile2dock.git
 
 ## Install dependencies
  ```
-conda install -c conda-forge rdkit openbabel
-or 
-pip install openbabel-wheel pybel
+python3 -m pip install openbabel-wheel pybel
 ```
 ## Usage:
 

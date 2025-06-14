@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+print("SMILES-to-3D Molecular Format Converter")
+print("For Bug report, send an E-mail to:")
+print("elvis.afmartis@gmail.com")
+#import modules that are necessary
 import os
 import argparse
 from rdkit import Chem
@@ -14,7 +20,7 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True):
             print(f"Invalid SMILES: {smiles}")
             return None, None
         mol = Chem.AddHs(mol)
-        
+
         # Generate 3D conformers
         AllChem.EmbedMultipleConfs(mol, numConfs=num_confs, randomSeed=42)
         if optimize:
@@ -24,12 +30,12 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True):
         # Convert to OpenBabel molecule for format export
         sdf_data = Chem.MolToMolBlock(mol)
         ob_mol = pybel.readstring("mol", sdf_data)
-        
+
         # Write different file formats
         for fmt in ["pdb", "mol2", "sdf", "pdbqt"]:
             output = f"{output_base}.{fmt}"
             ob_mol.write(fmt, output, overwrite=True)
-        
+
         # Calculate properties
         properties = {
             "Molecular Weight": Descriptors.MolWt(mol),
@@ -98,11 +104,11 @@ def single_process(smiles, output_base, num_confs, reference_smiles=None, fp_typ
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='SMILES to 3D converter with property and similarity calculation')
-    parser.add_argument('input', help='SMILES string or input file')
+    parser.add_argument('-i', '--input', help='SMILES string or input file')
     parser.add_argument('-o', '--output', default="output", help='Output directory or base name')
     parser.add_argument('-n', '--num_confs', type=int, default=10, help='Number of conformers to generate')
     parser.add_argument('--reference', help='Reference SMILES for Tanimoto similarity')
-    parser.add_argument('--fp_type', choices=["morgan", "rdkit"], default="morgan", help='Fingerprint type for similarity')
+    parser.add_argument('--fp_type', choices=["morgan", "rdkit"], default="rdkit", help='Fingerprint type for similarity')
     parser.add_argument('--radius', type=int, default=2, help='Morgan fingerprint radius (default: 2)')
     parser.add_argument('--bits', type=int, default=2048, help='Fingerprint bit size (default: 2048)')
 

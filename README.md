@@ -1,4 +1,6 @@
 # smile2dock: SMILES-to-3D Molecular Format Converter
+!(smile2dock.png)
+
 A Python tool for converting SMILES strings—single molecules or large libraries—into multiple 3D molecular formats (PDB, PDBQT, MOL2, SDF) for molecular docking and computational chemistry. The tool also calculates key physicochemical and pharmacokinetic properties using RDKit and Open Babel.
 Features
 - Input: Single SMILES string or a file (one SMILES per line)

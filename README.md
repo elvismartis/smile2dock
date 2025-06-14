@@ -23,6 +23,11 @@ pip install openbabel-wheel pybel
 ```
 ## Usage:
 
+### General usage:
+```
+python smile2dock.py -h 
+```
+
 ### single molecule conversion
 
 ```

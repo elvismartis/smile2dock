@@ -21,7 +21,7 @@ git clone git@github.com:elvismartis/smile2dock.git
 - RDKit
 - Open Babel (with Python bindings: openbabel and pybel)
 
-## install dependencies
+## Install dependencies
  ```
 conda install -c conda-forge rdkit openbabel
 or 
@@ -39,7 +39,7 @@ python smile2dock.py -h
 ```
 python smile2dock.py "CCO" -o ethanol
 ```
-### single molecule conversion with Tanimoto similarity
+### Single molecule conversion with Tanimoto similarity
 ```
 python smile2dock.py "CCO" -o ethanol --reference "CCN"
 ```
@@ -66,10 +66,10 @@ python smile2dock.py molecules.smi -o output_dir --reference "CCN"
 ### Output
 For each molecule, the following files are generated:
 ```
-`.pdb` : Protein Data Bank format
-`.pdbqt` : AutoDock Vina format
-`.mol2` : SYBYL MOL2 format
-`.sdf` : Structure Data File
+`.pdb`: Protein Data Bank format
+`.pdbqt`: AutoDock Vina format
+`.mol2`: SYBYL MOL2 format
+`.sdf`: Structure Data File
 ```
 
 # Known Issues

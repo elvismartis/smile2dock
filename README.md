@@ -10,6 +10,12 @@ Features
 - Batch Processing: Handles large compound libraries efficiently
 - Extensible: Easily add more descriptors or output formats
 
+## Install the package
+
+```
+git clone 
+```
+
 ## Requirements
 - Python 3.7+
 - RDKit

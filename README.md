@@ -59,17 +59,17 @@ python smile2dock.py molecules.smi -o output_dir --reference "CCN"
 
 ### input
 ```
-`-n`, `--num_confs`: Number of 3D conformers to generate (default: 10)
-`-o`, `--output`: Output directory or base name
+-n, --num_confs: Number of 3D conformers to generate (default: 10)
+-o, --output: Output directory or base name
 ```
 
 ### Output
 For each molecule, the following files are generated:
 ```
-`.pdb`: Protein Data Bank format
-`.pdbqt`: AutoDock Vina format
-`.mol2`: SYBYL MOL2 format
-`.sdf`: Structure Data File
+pdb: Protein Data Bank format
+pdbqt: AutoDock Vina format
+mol2: SYBYL MOL2 format
+sdf: Structure Data File
 ```
 
 # Known Issues

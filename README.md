@@ -13,7 +13,7 @@ Features
 ## Install the package
 
 ```
-git clone 
+git clone git@github.com:elvismartis/smile2dock.git
 ```
 
 ## Requirements

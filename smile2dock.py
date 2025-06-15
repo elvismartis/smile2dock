@@ -22,10 +22,17 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True):
         mol = Chem.AddHs(mol)
 
         # Generate 3D conformers
-        AllChem.EmbedMultipleConfs(mol, numConfs=num_confs, randomSeed=42)
+        AllChem.EmbedMultipleConfs(mol, numConfs=num_confs, 
+                                   randomSeed=42, 
+                                   forceTol=0.00001,
+                                   enforceChirality=True, 
+                                   ETversion=2)
         if optimize:
             for conf_id in range(mol.GetNumConformers()):
-                AllChem.MMFFOptimizeMolecule(mol, confId=conf_id)
+                AllChem.MMFFOptimizeMolecule(mol, 
+                                             confId=conf_id, 
+                                             mmffVariant='MMFF94s',
+                                             maxIters=1000)
 
         #Cleanup Molecule (Future Release)
         # MolStandardize.rdMolStandardize.Cleanup(mol)

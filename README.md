@@ -10,25 +10,34 @@ Features
 - Batch Processing: Handles large compound libraries efficiently
 - Extensible: Easily add more descriptors or output formats
 
+## Install the package
+
+```
+git clone git@github.com:elvismartis/smile2dock.git
+```
+
 ## Requirements
 - Python 3.7+
 - RDKit
 - Open Babel (with Python bindings: openbabel and pybel)
 
-## install dependencies
+## Install dependencies
  ```
-conda install -c conda-forge rdkit openbabel
-or 
-pip install openbabel-wheel pybel
+python3 -m pip install openbabel-wheel pybel
 ```
 ## Usage:
+
+### General usage:
+```
+python smile2dock.py -h 
+```
 
 ### single molecule conversion
 
 ```
 python smile2dock.py "CCO" -o ethanol
 ```
-### single molecule conversion with Tanimoto similarity
+### Single molecule conversion with Tanimoto similarity
 ```
 python smile2dock.py "CCO" -o ethanol --reference "CCN"
 ```
@@ -48,17 +57,17 @@ python smile2dock.py molecules.smi -o output_dir --reference "CCN"
 
 ### input
 ```
-`-n`, `--num_confs`: Number of 3D conformers to generate (default: 10)
-`-o`, `--output`: Output directory or base name
+-n, --num_confs: Number of 3D conformers to generate (default: 10)
+-o, --output: Output directory or base name
 ```
 
 ### Output
 For each molecule, the following files are generated:
 ```
-`.pdb` : Protein Data Bank format
-`.pdbqt` : AutoDock Vina format
-`.mol2` : SYBYL MOL2 format
-`.sdf` : Structure Data File
+pdb: Protein Data Bank format
+pdbqt: AutoDock Vina format
+mol2: SYBYL MOL2 format
+sdf: Structure Data File
 ```
 
 # Known Issues

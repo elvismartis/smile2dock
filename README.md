@@ -71,4 +71,9 @@ sdf: Structure Data File
 ```
 
 # Known Issues
+## Protonation states: 
+- The net charge must be specified for the moment (*workaround: use morphitedl*)
+
+## Incorrect aliphatic ring conformations
+- It has been observed that on certain occasions, aliphatic ring conformations are incorrect. (*work in process to fix this*)
 

@@ -7,7 +7,7 @@ print("elvis.afmartis@gmail.com")
 import os
 import argparse
 from rdkit import Chem
-from rdkit.Chem import AllChem, Descriptors, DataStructs
+from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
 from rdkit.Chem.Fingerprints import FingerprintMols
 from openbabel import pybel
 
@@ -27,6 +27,15 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True):
             for conf_id in range(mol.GetNumConformers()):
                 AllChem.MMFFOptimizeMolecule(mol, confId=conf_id)
 
+        #Cleanup Molecule (Future Release)
+        # MolStandardize.rdMolStandardize.Cleanup(mol)
+
+        #Charge Correction (Future Release)
+        # Chem.MolStandardize.rdMolStandardize.ChargeCorrection((object)self, (str)name, (str)smarts, (int)charge)
+
+        # Optimise tautomers (Future Release)
+        #MolStandardize.rdMolStandardize.CanonicalTautomer(mol)
+
         # Convert to OpenBabel molecule for format export
         sdf_data = Chem.MolToMolBlock(mol)
         ob_mol = pybel.readstring("mol", sdf_data)
@@ -38,12 +47,17 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True):
 
         # Calculate properties
         properties = {
-            "Molecular Weight": Descriptors.MolWt(mol),
-            "LogP": Descriptors.MolLogP(mol),
+            "Molecular Weight": Descriptors.ExactMolWt(mol),
+            "Crippen_LogP": Crippen.MolLogP(mol),
+            "Crippen_MR": Crippen.MolMR(mol),
             "H-Bond Donors": Descriptors.NumHDonors(mol),
             "H-Bond Acceptors": Descriptors.NumHAcceptors(mol),
             "TPSA": Descriptors.TPSA(mol),
-            "Rotatable Bonds": Descriptors.NumRotatableBonds(mol)
+            "Rotatable Bonds": Descriptors.NumRotatableBonds(mol),
+            "#Aliphatic Rings": rdMolDescriptors.CalcNumAliphaticRings(mol),
+            "#Aromatic Rings": rdMolDescriptors.CalcNumAromaticRings(mol),
+            "#Heteroaromatic Rings": rdMolDescriptors.CalcNumAromaticHeterocycles(mol)
+
         }
         return mol, properties
 

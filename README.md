@@ -39,9 +39,9 @@ SMILES to 3D converter with property and similarity calculation
 
 options:
   -h, --help                            # show this help message and exit
-  -i INPUT, --input INPUT               # SMILES string or input file
-  -o OUTPUT, --output OUTPUT            # Output directory or base name
-  -n NUM_CONFS, --num_confs NUM_CONFS   # Number of conformers to generate
+  -i, --input INPUT                     # SMILES string or input file
+  -o, --output OUTPUT                   # Output directory or base name
+  -n, --num_confs NUM_CONFS             # Number of conformers to generate (default: 10)
   --reference REFERENCE                 # Reference SMILES for Tanimoto similarity
   --fp_type {morgan,rdkit}              # Fingerprint type for similarity
   --radius RADIUS                       # Morgan fingerprint radius (default: 2)

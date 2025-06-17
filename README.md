@@ -38,7 +38,7 @@ python3 smile2dock.py [-h] [-i INPUT] [-o OUTPUT] [-n NUM_CONFS]
 SMILES to 3D converter with property and similarity calculation
 
 options:
-  -h, --help            show this help message and exit
+  -h, --help                            # show this help message and exit
   -i INPUT, --input INPUT               # SMILES string or input file
   -o OUTPUT, --output OUTPUT            # Output directory or base name
   -n NUM_CONFS, --num_confs NUM_CONFS   # Number of conformers to generate

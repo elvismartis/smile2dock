@@ -23,42 +23,50 @@ git clone git@github.com:elvismartis/smile2dock.git
 
 ## Install dependencies
  ```
+python3 -m venv </PATH/>cheminfo
+source </PATH/>cheminfo/bin/activate
 python3 -m pip install openbabel-wheel pybel
 ```
-## Usage:
 
-### General usage:
+## General usage:
 ```
-python smile2dock.py -h 
+
+python3 smile2dock.py [-h] [-i INPUT] [-o OUTPUT] [-n NUM_CONFS]
+                     [--reference REFERENCE] [--fp_type {morgan,rdkit}]
+                     [--radius RADIUS] [--bits BITS]
+
+SMILES to 3D converter with property and similarity calculation
+
+options:
+  -h, --help                            # show this help message and exit
+  -i, --input INPUT                     # SMILES string or input file
+  -o, --output OUTPUT                   # Output directory or base name
+  -n, --num_confs NUM_CONFS             # Number of conformers to generate (default: 10)
+  --reference REFERENCE                 # Reference SMILES for Tanimoto similarity
+  --fp_type {morgan,rdkit}              # Fingerprint type for similarity
+  --radius RADIUS                       # Morgan fingerprint radius (default: 2)
+  --bits BITS                           # Fingerprint bit size (default: 2048)
 ```
 
 ### single molecule conversion
 
 ```
-python smile2dock.py "CCO" -o ethanol
+python3 smile2dock.py "CCO" -o ethanol
 ```
 ### Single molecule conversion with Tanimoto similarity
 ```
-python smile2dock.py "CCO" -o ethanol --reference "CCN"
+python3 smile2dock.py "CCO" -o ethanol --reference "CCN"
 ```
 
 ### Batch Processing for molecular conversion
 Given a file `molecules.smi` with one SMILES per line:
 ```
-python smile2dock.py molecules.smi -o output_directory
+python3 smile2dock.py molecules.smi -o output_directory
 ```
 
 ### Batch Processing for molecular conversion with Tanimoto similarity
 ```
-python smile2dock.py molecules.smi -o output_dir --reference "CCN"
-```
-
-## Optional Arguments:
-
-### input
-```
--n, --num_confs: Number of 3D conformers to generate (default: 10)
--o, --output: Output directory or base name
+python3 smile2dock.py molecules.smi -o output_dir --reference "CCN"
 ```
 
 ### Output

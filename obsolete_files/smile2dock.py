@@ -1,9 +1,10 @@
 import os
 import argparse
 from rdkit import Chem
-from rdkit.Chem import AllChem, Descriptors, DataStructs
+from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
 from rdkit.Chem.Fingerprints import FingerprintMols
 from openbabel import pybel
+import json
 import dimorphite_dl
 
 def protonate_smiles(smiles, ph_min=6.4, ph_max=8.4, precision=1.0, max_variants=128):
@@ -60,17 +61,20 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, pr
         
         # Calculate properties
         properties = {
-            "Molecular Weight": Descriptors.MolWt(mol),
-            "LogP": Descriptors.MolLogP(mol),
+            "Molecular Weight": Descriptors.ExactMolWt(mol),
+            "Crippen_LogP": Crippen.MolLogP(mol),
+            "Crippen_MR": Crippen.MolMR(mol),
             "H-Bond Donors": Descriptors.NumHDonors(mol),
             "H-Bond Acceptors": Descriptors.NumHAcceptors(mol),
             "TPSA": Descriptors.TPSA(mol),
-            "Rotatable Bonds": Descriptors.NumRotatableBonds(mol)
+            "Rotatable Bonds": Descriptors.NumRotatableBonds(mol),
+            "#Aliphatic Rings": rdMolDescriptors.CalcNumAliphaticRings(mol),
+            "#Aromatic Rings": rdMolDescriptors.CalcNumAromaticRings(mol),
+            "#Heteroaromatic Rings": rdMolDescriptors.CalcNumAromaticHeterocycles(mol)
         }
-        
+
         # Return protonated variants if generated
         protonated_variants = protonate_smiles(smiles, ph_min, ph_max) if protonate else None
-        
         return mol, properties, protonated_variants
 
     except Exception as e:

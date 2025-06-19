@@ -64,7 +64,7 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, pr
         if mol is None:
             logging.error(f"Invalid SMILES: {smiles}")
             return None, None, protonated_variants
-
+        mol = Chem.AddHs(mol)
         # Generate 3D conformers
         try:
             AllChem.EmbedMultipleConfs(

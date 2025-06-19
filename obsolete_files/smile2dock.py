@@ -4,7 +4,6 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
 from rdkit.Chem.Fingerprints import FingerprintMols
 from openbabel import pybel
-import json
 import dimorphite_dl
 
 def protonate_smiles(smiles, ph_min=6.4, ph_max=8.4, precision=1.0, max_variants=128):

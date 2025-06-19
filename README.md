@@ -4,7 +4,7 @@
 A Python tool for converting SMILES strings—single molecules or large libraries—into multiple 3D molecular formats (PDB, PDBQT, MOL2, SDF) for molecular docking and computational chemistry. The tool also calculates key physicochemical and pharmacokinetic properties using RDKit and Open Babel.
 Features
 - Input: Single SMILES string or a file (one SMILES per line)
-- Generate protonation states for ph range (**dimorphite_dl**)[https://durrantlab.github.io/dimorphite_dl/]
+- Generate protonation states for ph range [(**dimorphite_dl**)](https://durrantlab.github.io/dimorphite_dl/)
 - 3D Structure Generation: Generates 3D coordinates and optimizes geometry
 - Format Conversion: Exports to PDB, PDBQT, MOL2, and SDF formats
 - Property Calculation: Calculates molecular weight, LogP, H-bond donors/acceptors, TPSA, rotatable bonds, and more

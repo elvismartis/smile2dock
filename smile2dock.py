@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
@@ -10,6 +9,28 @@ elvis.afmartis@gmail.com
 
 import os
 import argparse
+from rdkit import Chem
+from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
+from rdkit.Chem.Fingerprints import FingerprintMols
+from openbabel import pybel
+import json
+import dimorphite_dl
+
+def protonate_smiles(smiles, ph_min=6.4, ph_max=8.4, precision=1.0, max_variants=128):
+    """Protonate SMILES using Dimorphite-DL for specified pH range"""
+    try:
+        protonated_smiles = dimorphite_dl.protonate_smiles(
+            smiles, 
+            ph_min=ph_min, 
+            ph_max=ph_max, 
+            precision=precision,
+            max_variants=max_variants
+        )
+        return protonated_smiles
+    except Exception as e:
+        print(f"Error protonating {smiles}: {str(e)}")
+        return [smiles]  # Return original if protonation fails
+
 
 # Handle missing dependencies gracefully
 try:
@@ -38,16 +59,6 @@ def ensure_output_dir(output_base):
     outdir = os.path.dirname(output_base)
     if outdir:
         os.makedirs(outdir, exist_ok=True)
-=======
-import os
-import argparse
-from rdkit import Chem
-from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
-from rdkit.Chem.Fingerprints import FingerprintMols
-from openbabel import pybel
-import json
-import dimorphite_dl
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
 
 def protonate_smiles(smiles, ph_min=6.4, ph_max=8.4, precision=1.0, max_variants=128):
     """Protonate SMILES using Dimorphite-DL for specified pH range"""
@@ -63,7 +74,7 @@ def protonate_smiles(smiles, ph_min=6.4, ph_max=8.4, precision=1.0, max_variants
     except Exception as e:
         print(f"Error protonating {smiles}: {str(e)}")
         return [smiles]  # Return original if protonation fails
-
+      
 def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, protonate=False, ph_min=6.4, ph_max=8.4):
     """Convert SMILES to multiple 3D formats and calculate properties"""
     try:
@@ -82,17 +93,22 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, pr
         # RDKit: Parse and add hydrogens
         mol = Chem.MolFromSmiles(smiles)
         if mol is None:
-<<<<<<< HEAD
-            logging.error(f"Invalid SMILES: {smiles}")
-            return None, None
-=======
+
             print(f"Invalid SMILES: {smiles}")
             return None, None, None
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
         mol = Chem.AddHs(mol)
         
         # Generate 3D conformers
-<<<<<<< HEAD
+
+            logging.error(f"Invalid SMILES: {smiles}")
+            return None, None
+          
+            print(f"Invalid SMILES: {smiles}")
+            return None, None, None
+
+        
+        # Generate 3D conformers
+
         try:
             AllChem.EmbedMultipleConfs(
                 mol,
@@ -158,7 +174,6 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, pr
     except Exception as e:
         logging.error(f"Error processing {smiles}: {e}")
         return None, None
-=======
         AllChem.EmbedMultipleConfs(mol, numConfs=num_confs, randomSeed=42)
         if optimize:
             for conf_id in range(mol.GetNumConformers()):
@@ -194,7 +209,7 @@ def smiles_to_3d(smiles, output_base="molecule", num_confs=10, optimize=True, pr
     except Exception as e:
         print(f"Error processing {smiles}: {str(e)}")
         return None, None, None
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
+
 
 def calculate_tanimoto_similarity(mol1, mol2, fp_type="morgan", radius=2, n_bits=2048):
     """Calculate Tanimoto similarity between two molecules"""
@@ -209,15 +224,10 @@ def calculate_tanimoto_similarity(mol1, mol2, fp_type="morgan", radius=2, n_bits
         fp2 = FingerprintMols.FingerprintMol(mol2)
     return DataStructs.TanimotoSimilarity(fp1, fp2)
 
-<<<<<<< HEAD
-def batch_process(input_file, output_dir, reference_smiles=None, fp_type="morgan", radius=2, n_bits=2048):
-    """Process a file of SMILES strings, optionally computing similarity to a reference"""
-    ref_mol = None
-=======
+
 def batch_process(input_file, output_dir, reference_smiles=None, fp_type="morgan", radius=2, n_bits=2048, 
                  protonate=False, ph_min=6.4, ph_max=8.4, num_confs=10):
     """Process a file of SMILES strings with optional protonation and similarity calculation"""
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
     if reference_smiles:
         ref_mol = Chem.MolFromSmiles(reference_smiles)
         if ref_mol is None:
@@ -233,26 +243,6 @@ def batch_process(input_file, output_dir, reference_smiles=None, fp_type="morgan
     with open(input_file) as f:
         for idx, line in enumerate(f):
             smiles = line.strip()
-<<<<<<< HEAD
-            if not smiles:
-                continue
-            base_name = os.path.join(output_dir, f"mol_{idx+1}")
-            mol, props = smiles_to_3d(smiles, base_name)
-            if props:
-                logging.info(f"Processed {smiles}")
-                logging.info("Properties:")
-                for k, v in props.items():
-                    if isinstance(v, float):
-                        logging.info(f"  {k}: {v:.2f}")
-                    else:
-                        logging.info(f"  {k}: {v}")
-                if ref_mol:
-                    similarity = calculate_tanimoto_similarity(mol, ref_mol, fp_type, radius, n_bits)
-                    if similarity is not None:
-                        logging.info(f"Tanimoto similarity to reference: {similarity:.4f}")
-                    else:
-                        logging.warning("Similarity could not be calculated.")
-=======
             if smiles:
                 base_name = os.path.join(output_dir, f"mol_{idx+1}")
                 mol, props, protonated_variants = smiles_to_3d(
@@ -273,7 +263,6 @@ def batch_process(input_file, output_dir, reference_smiles=None, fp_type="morgan
                         similarity = calculate_tanimoto_similarity(mol, ref_mol, fp_type, radius, n_bits)
                         if similarity:
                             print(f"Tanimoto similarity to reference: {similarity:.4f}")
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
 
     if protonation_file:
         protonation_file.close()
@@ -290,12 +279,7 @@ def single_process(smiles, output_base, num_confs, reference_smiles=None, fp_typ
         print("Generated files:", [f"{output_base}.{fmt}" for fmt in ["pdb", "mol2", "sdf", "pdbqt"]])
         print("\nMolecular Properties:")
         for k, v in props.items():
-<<<<<<< HEAD
-            if isinstance(v, float):
-                print(f"{k}: {v:.2f}")
-            else:
-                print(f"{k}: {v}")
-=======
+
             print(f"{k}: {v:.2f}")
         
         # Display protonation states
@@ -305,20 +289,15 @@ def single_process(smiles, output_base, num_confs, reference_smiles=None, fp_typ
                 print(f"  {i}. {variant}")
         
         # Calculate similarity if reference provided
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
+
         if reference_smiles:
             ref_mol = Chem.MolFromSmiles(reference_smiles)
             if ref_mol:
                 similarity = calculate_tanimoto_similarity(mol, ref_mol, fp_type, radius, n_bits)
-<<<<<<< HEAD
-                if similarity is not None:
-                    print(f"Tanimoto similarity to reference: {similarity:.4f}")
-                else:
-                    print("Similarity could not be calculated.")
-=======
+
+
                 if similarity:
                     print(f"Tanimoto similarity to reference: {similarity:.4f}")
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
             else:
                 print(f"Invalid reference SMILES: {reference_smiles}")
 
@@ -327,17 +306,14 @@ def is_valid_smiles(smiles):
     return Chem.MolFromSmiles(smiles) is not None
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    parser = argparse.ArgumentParser(description='SMILES to 3D converter with property and similarity calculation')
-    parser.add_argument('-i', '--input', required=True, help='SMILES string or input file')
-=======
+
     parser = argparse.ArgumentParser(
         description='SMILES to 3D converter with protonation, property calculation, and similarity analysis'
     )
     
     # Core arguments
     parser.add_argument('-i', '--input', help='SMILES string or input file')
->>>>>>> 61e1f8d (Correction and deletion of redunancies)
+
     parser.add_argument('-o', '--output', default="output", help='Output directory or base name')
     parser.add_argument('-n', '--num_confs', type=int, default=10, help='Number of conformers to generate')
     
@@ -363,15 +339,8 @@ if __name__ == "__main__":
             args.protonate, args.ph_min, args.ph_max, args.num_confs
         )
     else:
-<<<<<<< HEAD
-        if not is_valid_smiles(args.input):
-            logging.error("Input is not a valid file or SMILES string. Please provide a valid SMILES or input file.")
-            exit(1)
-        ensure_output_dir(args.output)
-        single_process(args.input, args.output, args.num_confs, args.reference, args.fp_type, args.radius, args.bits)
-=======
+
         single_process(
             args.input, args.output, args.num_confs, args.reference, args.fp_type, args.radius, args.bits,
             args.protonate, args.ph_min, args.ph_max
         )
->>>>>>> 61e1f8d (Correction and deletion of redunancies)

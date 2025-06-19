@@ -14,7 +14,6 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, Descriptors, DataStructs, rdMolDescriptors, Crippen
 from rdkit.Chem.Fingerprints import FingerprintMols
 from openbabel import pybel
-import json
 import dimorphite_dl
 
 # Ensure logging is configured

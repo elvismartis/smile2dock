@@ -98,6 +98,8 @@ sdf: Structure Data File
 ## Citation
 
 ### If you use Dimorphite-DL in your research, please cite:
+#### This is an external program made a part of this repo to handle protonation states. 
+#### I AM NOT THE DEVELOPER OF Dimorphite-DL. 
 
 Ropp PJ, Kaminsky JC, Yablonski S, Durrant JD (2019) Dimorphite-DL: An open-source program for enumerating the ionization states of drug-like small molecules. J Cheminform 11:14. doi: 10.1186/s13321-019-0336-9.
 

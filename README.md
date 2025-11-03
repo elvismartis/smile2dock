@@ -128,3 +128,5 @@ If you use the GNNImplicitSolvent functionality, please cite that project's auth
 
 Open an issue or email: elvis.afmartis@gmail.com
 
+## Warranty Statement
+"smile2dock is distributed in the hope that it will be useful, but without any warranty. No author or distributor accepts responsibility to anyone for the consequences of using it or for whether it serves any particular purpose or works at all, unless he says so in writing."

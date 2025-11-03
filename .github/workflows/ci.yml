@@ -11,7 +11,7 @@ jobs:
   test-build:
     runs-on: ${{ matrix.os }}
     env:
-      CONDA_ENVS_PATH: ${{ runner.temp }}/conda-envs
+      CONDA_ENVS_PATH: ${{ temp }}/conda-envs
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]

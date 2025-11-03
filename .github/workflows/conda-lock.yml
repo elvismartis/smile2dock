@@ -25,10 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install conda-lock
 
-      - name: Generate conda-lock.yml for multiple platforms
-        run: |
-          # create lockfile for linux/osx/windows (conda-lock v2+ supports multiple platforms)
-          conda-lock -f environment.yml --platform linux-64 --platform osx-64 --platform win-64 -o conda-lock.yml
+
+    - name: Generate conda-lock.yml for multiple platforms
+      run: |
+    # create lockfile for linux/osx/windows (conda-lock v2+ supports multiple platforms)
+    conda-lock -f environment.yml --platform linux-64 --platform osx-64 --platform win-64 --filename conda-lock.yml
 
       - name: Create pull request with updated conda-lock.yml
         id: create_pr

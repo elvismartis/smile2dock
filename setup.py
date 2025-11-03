@@ -36,6 +36,7 @@ setup(
 	url="https://github.com/elvismartis/smile2dock",
 	packages=find_packages(exclude=("tests", "examples", "obsolete_files", "update_patch")),
 	py_modules=[
+		"smile2dock",
 		"smile2dock_v3",
 		"smile2dock_v3_GNNimplicitsolvent",
 	],
@@ -58,8 +59,11 @@ setup(
 		]
 	},
 	classifiers=[
+		"Development Status :: 4 - Beta",
+		"Intended Audience :: Science/Research",
+		"Topic :: Scientific/Engineering :: Chemistry",
 		"Programming Language :: Python :: 3",
-		"License :: OSI Approved :: MIT License",
+		"Programming Language :: Python :: 3.8",
 		"Operating System :: OS Independent",
 	],
 	python_requires=">=3.8",

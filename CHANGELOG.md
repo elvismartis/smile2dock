@@ -158,6 +158,13 @@
 - `tests/` (new): unit tests and small test runner `tests/run_tests.py`
 - `README.md` (updated): documents new features, usage, and testing
 
+### Packaging & build
+
+- Removed `setup.py` in favor of `pyproject.toml` (PEP 621) as the single source of packaging metadata.
+- Added a `pyproject.toml` with build-system, project metadata, dependencies, and optional extras (`gnn`, `dev`).
+- Synced `GNNImplicitSolvent` Git URL in `pyproject.toml` to `https://github.com/fjclark/GNNImplicitSolvent.git` to match prior configuration.
+- Local PEP 517 builds were performed and produced artifacts under `dist/` (wheel and sdist).
+
 ### How to test
 1. Create a dedicated environment (recommended: mamba/conda) and install core deps
 2. (Optional) Install GNN stack if you plan to use the `--use_gnn` mode

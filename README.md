@@ -37,22 +37,66 @@ See `requirements.txt` for recommended versions and the GNN package reference.
 
 ## Installation
 
-Clone and install dependencies. We recommend a conda/mamba environment for RDKit/OpenMM/OpenFF:
+Clone the repository and create a dedicated environment (recommended: conda/mamba) for platform-sensitive packages such as RDKit and OpenMM. This project now uses PEP 621 (`pyproject.toml`) for packaging.
+
+Quick start (macOS / zsh):
 
 ```bash
 git clone git@github.com:elvismartis/smile2dock.git
 cd smile2dock
-# create a conda environment (example)
+# create a conda/mamba environment (example)
 mamba create -n smile2dock python=3.10 -y
 mamba activate smile2dock
-# install core deps
-mamba install -c conda-forge rdkit openbabel numpy -y
-pip install -r requirements.txt
+# install platform-sensitive core deps via conda-forge
+mamba install -c conda-forge rdkit openbabel -y
+# create and activate a lightweight editable install for development
+python3 -m pip install --upgrade pip
+python3 -m pip install -e '.[dev]'
 ```
 
-If you do not plan to use the GNN-based minimizer, you can skip installing the heavy ML/MD dependencies.
+Notes:
+- `rdkit`, `openbabel`, `openmm`, and `openff-toolkit` are best installed with conda/mamba.
+- The project uses `pyproject.toml` as the single source of packaging metadata (no `setup.py`).
+- To install optional GNN extras (heavy ML/MD stack) follow platform-specific steps for PyTorch and torch-geometric first, then:
+
+```bash
+# after installing platform-appropriate torch and torch-geometric
+python3 -m pip install -e '.[gnn]'
+```
+
+If you do not plan to use the GNN-based minimizer, skip the `.[gnn]` install step.
 
 ## Example usage
+
+## Reproducible Conda Environments (conda-lock)
+
+This repository includes an `environment.yml` and a workflow that generates a deterministic `conda-lock.yml` for linux/osx/windows. Use `conda-lock` to produce and consume cross-platform lockfiles so CI and contributors can recreate identical conda environments.
+
+Regenerate the lockfile locally (same command used by CI):
+
+```bash
+# install conda-lock (pip)
+python -m pip install --upgrade pip
+python -m pip install conda-lock
+
+# generate conda-lock.yml for common platforms
+conda-lock -f environment.yml --platform linux-64 --platform osx-64 --platform win-64 -o conda-lock.yml
+```
+
+Install an environment from a lockfile (platform-specific). See the `conda-lock` documentation for full options; an example flow is:
+
+```bash
+# example: install the linux-64 lock into a prefix using conda-lock's install helper
+conda-lock install --name testenv --file conda-lock.yml --platform linux-64
+
+# or create a prefix using mamba with the explicit package list generated from the lockfile
+# (consult conda-lock docs for `conda-lock render` / `conda-lock export` helpers to create exact spec files)
+```
+
+Notes:
+- CI includes a workflow (`.github/workflows/conda-lock.yml`) that updates `conda-lock.yml` on `main` when you push or via manual dispatch.
+- Committing `conda-lock.yml` provides deterministic installs and a stable cache key for CI.
+
 
 Standard single-molecule conversion (v3):
 
@@ -105,16 +149,60 @@ The tool also logs computed properties (MW, LogP, TPSA, H-bond donors/acceptors,
 
 A basic unit-test suite lives under `tests/`. The GNN tests are skipped automatically if `GNNImplicitSolvent` is not installed.
 
-To run tests after installing requirements:
+After installing the `dev` extras you can run the tests:
 
 ```bash
-pip install -r requirements.txt
-python3 -m tests.run_tests
+python3 -m pytest -q
+```
+
+If you prefer to build first, the repository supports PEP 517 builds; the project has produced wheel/sdist artifacts under `dist/` after a local build:
+
+```bash
+# build artifacts (in a venv)
+python3 -m pip install --upgrade build
+python3 -m build
+ls -l dist
+```
+
+## Installing PyTorch and torch-geometric (guide)
+
+The `.[gnn]` extras depend on PyTorch and `torch-geometric`, which provide platform-specific wheels (CPU / CUDA) and often require matching versions. Follow these steps for common cases.
+
+- CPU-only (recommended for testing without CUDA):
+
+```bash
+# install a compatible CPU-only PyTorch wheel
+python3 -m pip install "torch>=2.0.0" --index-url https://download.pytorch.org/whl/cpu
+# then install torch-geometric following their quickstart (matching the torch version):
+python3 -m pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
+python3 -m pip install torch-sparse -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
+python3 -m pip install torch-cluster -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
+python3 -m pip install torch-spline-conv -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
+python3 -m pip install torch-geometric
+```
+
+- CUDA (GPU) installation (pick CUDA version that matches your system):
+
+1. Install the matching PyTorch CUDA wheel, see https://pytorch.org for instructions. Example for CUDA 11.8:
+
+```bash
+python3 -m pip install "torch>=2.0.0+cu118" --index-url https://download.pytorch.org/whl/cu118
+```
+
+2. Install torch-geometric wheels that match your torch+CUDA combination. See the PyG installation guide at https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html for exact commands and wheel URLs.
+
+Notes:
+- Always consult https://pytorch.org and https://pytorch-geometric.readthedocs.io for the latest supported versions and wheel URLs.
+- After installing PyTorch & torch-geometric you can install the gnn extras for the project:
+
+```bash
+# after platform-appropriate torch & torch-geometric are installed
+python3 -m pip install -e '.[gnn]'
 ```
 
 ## CHANGELOG
 
-See `CHANGELOG.md` for a full list of changes from legacy `smile2dock.py` to v3 and the GNN-enabled variant.
+See `CHANGELOG.md` for a full list of changes. Notable packaging updates in v3.1.0: `setup.py` was removed in favor of `pyproject.toml` (PEP 621) and the GNN extras Git URL was synced to the fjclark repository for `GNNImplicitSolvent`.
 
 ## Citation
 

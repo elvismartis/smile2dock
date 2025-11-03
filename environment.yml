@@ -1,0 +1,17 @@
+name: testenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - rdkit
+  - openbabel
+  - numpy
+  - dimorphite-dl
+  - conda-pack
+  - pip
+  - pip:
+    # dev/test deps installed via pip in CI (editable install)
+    - pytest
+    - pytest-cov
+    - -e .[dev]

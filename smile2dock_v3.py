@@ -36,9 +36,9 @@ PROPERTY_DESCRIPTORS = {
     "H-Bond Acceptors": Descriptors.NumHAcceptors,
     "TPSA": Descriptors.TPSA,
     "Rotatable Bonds": Descriptors.NumRotatableBonds,
-    "#Aliphatic Rings": rdMolDescriptors.CalcNumAliphaticRings,
-    "#Aromatic Rings": rdMolDescriptors.CalcNumAromaticRings,
-    "#Heteroaromatic Rings": rdMolDescriptors.CalcNumHeterocycles
+    "NUM of Aliphatic Rings": rdMolDescriptors.CalcNumAliphaticRings,
+    "NUM of Aromatic Rings": rdMolDescriptors.CalcNumAromaticRings,
+    "NUM of Heteroaromatic Rings": rdMolDescriptors.CalcNumHeterocycles
 }
 
 # Configure logging with more detailed format

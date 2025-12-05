@@ -6,15 +6,6 @@ smile2dock converts SMILES strings (single molecules or libraries) into 3D struc
 
 - `smile2dock.py` — Improved core implementation with input validation, logging, resource management and tests.
 
-## What is new in v3
-
-- Validates SMILES and numeric CLI args
-- Centralized constants and configuration
-- Timestamped, consistent logging
-- Context-managed file operations and explicit RDKit object cleanup
-- MMFF geometry optimization with convergence checks
-- Protonation enumeration with `dimorphite_dl` (with pH validation)
-
 ## Requirements
 
 - Python 3.8+

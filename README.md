@@ -25,21 +25,8 @@ smile2dock converts SMILES strings (single molecules or libraries) into 3D struc
 
 See `requirements.txt` for recommended versions and the GNN package reference.
 
-## Installation
 
-Quick start (macOS / zsh):
 
-```bash
-git clone git@github.com:elvismartis/smile2dock.git
-cd smile2dock
-# create and activate a lightweight editable install for development
-python3 -m pip install --upgrade pip
-python3 -m pip install -e '.[dev]'
-```
-
-Notes:
-- `rdkit`, and `openbabel` are best installed with conda/mamba.
-- The project uses `pyproject.toml` as the single source of packaging metadata (no `setup.py`).
 
 
 ## Example usage

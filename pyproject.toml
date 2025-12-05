@@ -11,9 +11,9 @@ requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
     {name = "Elvis Martis", email = "elvis.afmartis@gmail.com"},
-    {name = "Stéphane Téletchéa", email= "stephane.teletchea@univ-nantes.fr"}
+    {name = "Stéphane Téletchéa", email = "stephane.teletchea@univ-nantes.fr"}
 ]
-keywords = ["SMILES", "molecular-format", "3D-structure", "RDKit", "chemistry"]
+keywords = ["SMILES", "molecular-format", "3D-structure", "RDKit", "chemistry", "molecular-docking"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -24,6 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
 dependencies = [
     "rdkit>=2022.09",
@@ -40,11 +41,11 @@ dev = [
     "ruff>=0.1.0",
 ]
 
-
 [project.urls]
 "Homepage" = "https://github.com/elvismartis/smile2dock"
 "Bug Tracker" = "https://github.com/elvismartis/smile2dock/issues"
 "Changelog" = "https://github.com/elvismartis/smile2dock/blob/main/CHANGELOG.md"
+"Documentation" = "https://github.com/elvismartis/smile2dock#readme"
 
 [tool.setuptools]
 packages = ["smile2dock"]
@@ -52,7 +53,39 @@ packages = ["smile2dock"]
 [tool.black]
 line-length = 100
 target-version = ["py38", "py39", "py310", "py311"]
+extend-exclude = '''
+/(
+  \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
 
 [tool.ruff]
 line-length = 100
 target-version = "py38"
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]  # Black handles line length
+exclude = [".git", ".venv", "build", "dist"]
+
+[tool.ruff.isort]
+known-first-party = ["smile2dock"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=smile2dock --cov-report=html --cov-report=term-missing"
+python_files = ["test_*.py"]
+
+[tool.coverage.run]
+branch = true
+source = ["smile2dock"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

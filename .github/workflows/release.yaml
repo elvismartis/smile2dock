@@ -55,9 +55,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
 
-      - name: Build wheel and sdist
-        run: python -m build
-
       - name: Verify artifacts
         run: |
           twine check dist/*

@@ -32,11 +32,6 @@ Quick start (macOS / zsh):
 ```bash
 git clone git@github.com:elvismartis/smile2dock.git
 cd smile2dock
-# create a conda/mamba environment (example)
-mamba create -n smile2dock python=3.10 -y
-mamba activate smile2dock
-# install platform-sensitive core deps via conda-forge
-mamba install -c conda-forge rdkit openbabel -y
 # create and activate a lightweight editable install for development
 python3 -m pip install --upgrade pip
 python3 -m pip install -e '.[dev]'

@@ -4,7 +4,7 @@
 
 smile2dock converts SMILES strings (single molecules or libraries) into 3D structures and common molecular file formats (PDB, PDBQT, MOL2, SDF). It also computes several molecular descriptors with RDKit and supports protonation enumeration via Dimorphite-DL.
 
-- `smile2dock_v3.py` — Improved core implementation with input validation, logging, resource management and tests.
+- `smile2dock.py` — Improved core implementation with input validation, logging, resource management and tests.
 
 ## What is new in v3
 
@@ -23,15 +23,9 @@ smile2dock converts SMILES strings (single molecules or libraries) into 3D struc
 - dimorphite-dl
 - numpy
 
-Optional (for GNN features):
-
-
-
 See `requirements.txt` for recommended versions and the GNN package reference.
 
 ## Installation
-
-Clone the repository and create a dedicated environment (recommended: conda/mamba) for platform-sensitive packages such as RDKit and OpenMM. This project now uses PEP 621 (`pyproject.toml`) for packaging.
 
 Quick start (macOS / zsh):
 
@@ -58,25 +52,19 @@ Notes:
 Standard single-molecule conversion (v3):
 
 ```bash
-python3 smile2dock_v3.py -i "CCO" -o ethanol
+python3 smile2dock.py -i "CCO" -o ethanol
 ```
 
 Protonation enumeration:
 
 ```bash
-python3 smile2dock_v3.py -i "CCO" --protonate --ph_min 7.0 --ph_max 7.4 -o ethanol_ph
-```
-
-GNN implicit-solvent minimization (requires `GNNImplicitSolvent`):
-
-```bash
-python3 smile2dock_v3_GNNimplicitsolvent.py -i "CCO" --use_gnn --solvent DMSO -o ethanol_gnn
+python3 smile2dock.py -i "CCO" --protonate --ph_min 7.0 --ph_max 7.4 -o ethanol_ph
 ```
 
 Batch processing:
 
 ```bash
-python3 smile2dock_v3.py -i molecules.smi -o batch_output --protonate
+python3 smile2dock.py -i molecules.smi -o batch_output --protonate
 ```
 
 ## Command-line flags (summary)
@@ -100,22 +88,9 @@ For each molecule the tool will attempt to produce:
 
 The tool also logs computed properties (MW, LogP, TPSA, H-bond donors/acceptors, rotatable bonds, ring counts, etc.).
 
-
-```bash
-# install a compatible CPU-only PyTorch wheel
-python3 -m pip install "torch>=2.0.0" --index-url https://download.pytorch.org/whl/cpu
-# then install torch-geometric following their quickstart (matching the torch version):
-python3 -m pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
-python3 -m pip install torch-sparse -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
-python3 -m pip install torch-cluster -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
-python3 -m pip install torch-spline-conv -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
-python3 -m pip install torch-geometric
-```
-
-
 ## CHANGELOG
 
-See `CHANGELOG.md` for a full list of changes. Notable packaging updates in v3.1.0: `setup.py` was removed in favor of `pyproject.toml` (PEP 621) and the GNN extras Git URL was synced to the fjclark repository for `GNNImplicitSolvent`.
+See `CHANGELOG.md` for a full list of changes. Notable packaging updates in v3.1.0: `setup.py` was removed in favor of `pyproject.toml` (PEP 621).
 
 ## Citation
 

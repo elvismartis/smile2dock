@@ -1,5 +1,8 @@
 [build-system]
-requires = ["setuptools"]
+requires = [
+    "setuptools",
+    "some-build-toolkit",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -33,14 +36,6 @@ dependencies = [
     "numpy>=1.21",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "black>=23.0",
-    "ruff>=0.1.0",
-]
-
 [project.urls]
 "Homepage" = "https://github.com/elvismartis/smile2dock"
 "Bug Tracker" = "https://github.com/elvismartis/smile2dock/issues"
@@ -53,29 +48,14 @@ packages = ["smile2dock"]
 [tool.black]
 line-length = 100
 target-version = ["py38", "py39", "py310", "py311"]
-extend-exclude = '''
-/(
-  \.git
-  | \.venv
-  | build
-  | dist
-)/
-'''
 
-[tool.ruff]
 line-length = 100
 target-version = "py38"
 select = ["E", "F", "W", "I"]
 ignore = ["E501"]  # Black handles line length
 exclude = [".git", ".venv", "build", "dist"]
 
-[tool.ruff.isort]
 known-first-party = ["smile2dock"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "--cov=smile2dock --cov-report=html --cov-report=term-missing"
-python_files = ["test_*.py"]
 
 [tool.coverage.run]
 branch = true

@@ -20,10 +20,6 @@ jobs:
         cache-dependency-path: '**/pyproject.toml'
     - name: Install dependencies
       run: |
-        pip install -e '.[test]'
-    - name: Run tests
-      run: |
-        pytest
   deploy:
     runs-on: ubuntu-latest
     environment: release

@@ -45,8 +45,6 @@ packages = ["smile2dock"]
 [tool.black]
 line-length = 100
 target-version = ["py38"]
-
-line-length = 100
 target-version = "py38"
 select = ["E", "F", "W", "I"]
 ignore = ["E501"]  # Black handles line length

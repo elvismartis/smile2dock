@@ -72,7 +72,7 @@ The tool also logs computed properties (MW, LogP, TPSA, H-bond donors/acceptors,
 
 ## CHANGELOG
 
-- Code Refracted
+- Code Refactored
 - Validation Checks added
 - More descriptive errors
 

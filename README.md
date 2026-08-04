@@ -72,7 +72,9 @@ The tool also logs computed properties (MW, LogP, TPSA, H-bond donors/acceptors,
 
 ## CHANGELOG
 
-See `CHANGELOG.md` for a full list of changes. Notable packaging updates in v3.1.0: `setup.py` was removed in favor of `pyproject.toml` (PEP 621).
+- Code Refracted
+- Validation Checks added
+- More descriptive errors
 
 ## Citation
 

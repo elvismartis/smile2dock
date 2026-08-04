@@ -16,12 +16,17 @@ smile2dock converts SMILES strings (single molecules or libraries) into 3D struc
 
 See `requirements.txt` for recommended versions and the GNN package reference.
 
+## Check required packages
+
+```
+python3 -c "from rdkit import Chem; from openbabel import pybel; import dimorphite_dl; print('Dependencies OK')"
+```
+
 ## Installation of Required packages
 
 ```
 pip3 install -r requirements.txt
 ```
-
 
 
 ## Example usage
